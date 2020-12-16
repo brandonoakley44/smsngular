@@ -31,47 +31,54 @@ export class TradermadeService {
 
   constructor() {
 
-    var connected = false;
+  //  var connected = false;
     // this._socket = io(this._socketUrl, { reconnect: true});
     //this._socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
-    var socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
-    socket.on('connect', function () {
+    this._socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
+    this._socket.on('connect',  () => {
      console.log('Connected! Please CTRL+C and restart if you see this messsage more than twice');
      console.log('disconnecting and reconnecting can take upto a minute');
      console.log('.......');
-     socket.emit('login', {userKey: "sio4gh_OXEqW2T05-JnQA"});
+     this._socket.emit('login', {userKey: "sio4gh_OXEqW2T05-JnQA"});
 
      });
 
-     socket.on('disconnect', function (msg) {
+     this._socket.on('disconnect', (msg) => {
       console.log(msg);
      });
 
-     socket.on('handshake', function (msg) {
-      console.log(msg);
-      connected = true;
-      socket.emit("symbolSub", {symbol: "USDJPY"});
-      socket.emit("symbolSub", {symbol: "GBPUSD"});
-      socket.emit("symbolSub", {symbol: "EURUSD"});
+    //  this._socket.on('handshake', (msg) =>  {
+    //   console.log(msg);
+    //   this.connected = true;
+    //   this._socket.emit("symbolSub", {symbol: "USDJPY"});
+    //   this._socket.emit("symbolSub", {symbol: "GBPUSD"});
+    //   this._socket.emit("symbolSub", {symbol: "EURUSD"});
 
-    });
+    // });
 
-    socket.on('subResponse', function (msg) {
+    this._socket.on('subResponse',  (msg) => {
       console.log(msg)
 
     });
 
 
-    socket.on('price', function (message){
+    this._socket.on('price', (message) => {
       var data = message.split(" ")
       console.log(data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " ")
 
     });
 
 
+   }
 
-
-
+   subscribeToStock(data: string[]) {
+     if (data) {
+       this._socket.on('handshake', (msg) => {
+        for (let stock of data ) {
+          this._socket.emit("symbolSub", { symbol: `${stock}` });
+        }
+       });
+     }
 
    }
 

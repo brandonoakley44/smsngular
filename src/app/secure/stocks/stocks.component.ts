@@ -11,6 +11,8 @@ import { Color, Label } from 'ng2-charts';
 })
 export class StocksComponent implements OnInit {
 
+  private subscribedStocks: string[] = [];
+
   public datasets: ChartDataSets[] = [
     { data: [], label: 'Stock', fill: false , lineTension: 0 },
     { data: [], label: 'Other', fill: false , lineTension: 0 },
@@ -45,7 +47,8 @@ export class StocksComponent implements OnInit {
   constructor( private traderAPIservice: TradermadeService ) { }
 
   ngOnInit(): void {
-
+    this.subscribedStocks = ["USDJPY"];
+    this.traderAPIservice.subscribeToStock(this.subscribedStocks);
   }
 
 }
