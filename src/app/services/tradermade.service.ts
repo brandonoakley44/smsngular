@@ -73,6 +73,22 @@ export class TradermadeService {
 
    }
 
+
+   getUserStocks(data: string[]): Observable<any[]> {
+     return Observable.create(observer => {
+       this._socket.on('handshake', (msg) => {
+         //this._socket.emit("symbolSub", { symbol: "USDJPY" });
+         if (data) {
+           for ( let stock of data ) {
+             this._socket.emit("symbolSub", { symbol: `${stock}` });
+          }
+         }
+        // observer.next(msg);
+       })
+     })
+   }
+
+
    subscribeToStock(data: string[]) {
      if (data) {
        this._socket.on('handshake', (msg) => {
