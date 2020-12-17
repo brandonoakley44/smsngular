@@ -12,13 +12,8 @@ import { Stock } from 'src/app/interfaces/stock';
 })
 export class StocksComponent implements OnInit {
 
-//Stocks that the user may subscribe to
-  USDJPY: Stock;
-  GBPUSD: Stock;
-  EURUSD: Stock;
+  private subscribedStocks: string[] = [];
 
-
-  //ng2-charts with a straming plugin for real-time x axis
   public datasets: ChartDataSets[] = [
     { data: [], label: 'Stock', fill: false , lineTension: 0 },
     { data: [], label: 'Other', fill: false , lineTension: 0 },
@@ -53,8 +48,8 @@ export class StocksComponent implements OnInit {
   constructor( private traderAPIservice: TradermadeService ) { }
 
   ngOnInit(): void {
-  this.traderAPIservice.juggernaut();
-
+    this.subscribedStocks = ["USDJPY"];
+    this.traderAPIservice.subscribeToStock(this.subscribedStocks);
   }
 
 }

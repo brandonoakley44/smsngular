@@ -33,59 +33,11 @@ export class TradermadeService {
   //Implemented connecction to tradermade API service using socket.io-client npm package.
   constructor() {
 
-   // var connected = false;
+  //  var connected = false;
     // this._socket = io(this._socketUrl, { reconnect: true});
     //this._socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
     this._socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
-    // socket.on('connect', function () {
-    //  console.log('Connected! Please CTRL+C and restart if you see this messsage more than twice');
-    //  console.log('disconnecting and reconnecting can take upto a minute');
-    //  console.log('.......');
-    //  socket.emit('login', {userKey: "sio4gh_OXEqW2T05-JnQA"});
-
-    //  });
-
-    //  socket.on('disconnect', function (msg) {
-    //   console.log(msg);
-    //  });
-
-    //  socket.on('handshake', function (msg) {
-    //   console.log(msg);
-    //   this.connected = true;
-    //   //Subscribing to stocks with the following symbols
-    //   socket.emit("symbolSub", {symbol: "USDJPY"});
-    //   socket.emit("symbolSub", {symbol: "GBPUSD"});
-    //   socket.emit("symbolSub", {symbol: "EURUSD"});
-
-    // });
-
-    // socket.on('subResponse', function (msg) {
-    //   console.log(msg)
-
-    // });
-
-
-    // socket.on('price', function (message){
-    //   var data = message.split(" ")
-    //   console.log(data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + "helloWorld")
-
-    // });
-
-
-
-
-
-
-   }
-
-
-   juggernaut() {
-
-       // var connected = false;
-    // this._socket = io(this._socketUrl, { reconnect: true});
-    //this._socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
-   // var socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
-    this._socket.on('connect', () => {
+    this._socket.on('connect',  () => {
      console.log('Connected! Please CTRL+C and restart if you see this messsage more than twice');
      console.log('disconnecting and reconnecting can take upto a minute');
      console.log('.......');
@@ -97,15 +49,14 @@ export class TradermadeService {
       console.log(msg);
      });
 
-     this._socket.on('handshake', (msg) => {
-      console.log(msg);
-      this.connected = true;
-      //Subscribing to stocks with the following symbols
-      this._socket.emit("symbolSub", {symbol: "USDJPY"});
-      this._socket.emit("symbolSub", {symbol: "GBPUSD"});
-      this._socket.emit("symbolSub", {symbol: "EURUSD"});
+    //  this._socket.on('handshake', (msg) =>  {
+    //   console.log(msg);
+    //   this.connected = true;
+    //   this._socket.emit("symbolSub", {symbol: "USDJPY"});
+    //   this._socket.emit("symbolSub", {symbol: "GBPUSD"});
+    //   this._socket.emit("symbolSub", {symbol: "EURUSD"});
 
-    });
+    // });
 
     this._socket.on('subResponse',  (msg) => {
       console.log(msg)
@@ -120,6 +71,16 @@ export class TradermadeService {
     });
 
 
+   }
+
+   subscribeToStock(data: string[]) {
+     if (data) {
+       this._socket.on('handshake', (msg) => {
+        for (let stock of data ) {
+          this._socket.emit("symbolSub", { symbol: `${stock}` });
+        }
+       });
+     }
 
    }
 
