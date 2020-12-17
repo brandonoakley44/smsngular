@@ -3,6 +3,7 @@ import { TradermadeService } from 'src/app/services/tradermade.service';
 import 'chartjs-plugin-streaming';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { Stock } from 'src/app/interfaces/stock';
 
 @Component({
   selector: 'app-stocks',
@@ -11,6 +12,13 @@ import { Color, Label } from 'ng2-charts';
 })
 export class StocksComponent implements OnInit {
 
+//Stocks that the user may subscribe to
+  USDJPY: Stock;
+  GBPUSD: Stock;
+  EURUSD: Stock;
+
+
+  //ng2-charts with a straming plugin for real-time x axis
   public datasets: ChartDataSets[] = [
     { data: [], label: 'Stock', fill: false , lineTension: 0 },
     { data: [], label: 'Other', fill: false , lineTension: 0 },
@@ -45,6 +53,7 @@ export class StocksComponent implements OnInit {
   constructor( private traderAPIservice: TradermadeService ) { }
 
   ngOnInit(): void {
+  this.traderAPIservice.juggernaut();
 
   }
 
