@@ -74,31 +74,60 @@ export class TradermadeService {
    }
 
 
-   getUserStocks(data: string[]): Observable<any[]> {
-     return Observable.create(observer => {
-       this._socket.on('handshake', (msg) => {
-         //this._socket.emit("symbolSub", { symbol: "USDJPY" });
-         if (data) {
-           for ( let stock of data ) {
-             this._socket.emit("symbolSub", { symbol: `${stock}` });
-          }
-         }
-        // observer.next(msg);
-       })
-     })
-   }
+  //  getUserStocks(data: string[]): Observable<any[]> {
+  //    return Observable.create(observer => {
+  //      this._socket.on('handshake', (msg) => {
+  //        //this._socket.emit("symbolSub", { symbol: "USDJPY" });
+  //        if (data) {
+  //          for ( let stock of data ) {
+  //            this._socket.emit("symbolSub", { symbol: `${stock}` });
+  //         }
+  //        }
+  //       // observer.next(msg);
+  //      })
+  //    })
+  //  }
 
 
-   subscribeToStock(data: string[]) {
-     if (data) {
-       this._socket.on('handshake', (msg) => {
-        for (let stock of data ) {
-          this._socket.emit("symbolSub", { symbol: `${stock}` });
-        }
-       });
-     }
+  subscribeToStocks(data: string[]): Observable<any[]> {
+    if ( data ) {
+      for (let stock of data) {
+        this._socket.emit("symbolSub", { symbol: `${stock}`});
+      }
+    }
+    return Observable.create(observer => {
+      this._socket.on('price', (message) => {
+        var data = message.split(" ");
+        //Initialize a stock variable
+        //stream it
+        observer.next(data);
+      });
+    });
+  }
 
-   }
+
+  //  subscribeToStock(data: string[]) {
+  //    if (data) {
+  //      for(let stock of data) {
+  //        this._socket.emit("symbolSub", { symbol: `${stock}`});
+  //        this._socket.on("price", (message) => {
+
+  //        })
+  //      }
+  //    }
+  //  }
+
+
+  //  subscribeToStock(data: string[]) {
+  //    if (data) {
+  //      this._socket.on('handshake', (msg) => {
+  //       for (let stock of data ) {
+  //         this._socket.emit("symbolSub", { symbol: `${stock}` });
+  //       }
+  //      });
+  //    }
+
+  //  }
 
 
 
