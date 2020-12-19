@@ -1,3 +1,16 @@
+To test out this stocktrader app: 
+Install the angular cli with npm
+
+npm install -g @angular/cli
+
+install all of the dependencies in package.json with:
+npm i
+
+run the application with
+ng serve
+
+
+
 # Stocktrader
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.3.
