@@ -18,16 +18,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'dashboard', component: DashboardComponent
-      },
-      {
         path: 'user' , component: UserComponent
       },
       {
-        path: 'users' , component: UsersComponent
-      },
-      {
-        path: 'order' , component: OrderComponent
+        path: 'choose' , component: OrderComponent
       },
       {
         path: 'stocks', component: StocksComponent

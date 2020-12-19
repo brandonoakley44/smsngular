@@ -1,1 +1,24 @@
-<p>order works!</p>
+<div class="container" style="margin-top: 5px; margin-left:25%;">
+
+  <form class="form-signin" [formGroup]="form" (submit)="submit()">
+
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">USDJPY</label>
+    </div>
+
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">GBPUSD</label>
+    </div>
+
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">EURUSD</label>
+    </div>
+
+    <button  class="btn btn-lg btn-primary btn-block" type="submit">Subscribe to Stocks</button>
+
+  </form>
+
+</div>

@@ -33,9 +33,7 @@ export class TradermadeService {
   //Implemented connecction to tradermade API service using socket.io-client npm package.
   constructor() {
 
-  //  var connected = false;
-    // this._socket = io(this._socketUrl, { reconnect: true});
-    //this._socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
+
     this._socket = io.connect('https://marketdata.tradermade.com', {reconnect: true});
     this._socket.on('connect',  () => {
      console.log('Connected! Please CTRL+C and restart if you see this messsage more than twice');
@@ -49,14 +47,7 @@ export class TradermadeService {
       console.log(msg);
      });
 
-    //  this._socket.on('handshake', (msg) =>  {
-    //   console.log(msg);
-    //   this.connected = true;
-    //   this._socket.emit("symbolSub", {symbol: "USDJPY"});
-    //   this._socket.emit("symbolSub", {symbol: "GBPUSD"});
-    //   this._socket.emit("symbolSub", {symbol: "EURUSD"});
 
-    // });
 
     this._socket.on('subResponse',  (msg) => {
       console.log(msg)
@@ -74,19 +65,7 @@ export class TradermadeService {
    }
 
 
-  //  getUserStocks(data: string[]): Observable<any[]> {
-  //    return Observable.create(observer => {
-  //      this._socket.on('handshake', (msg) => {
-  //        //this._socket.emit("symbolSub", { symbol: "USDJPY" });
-  //        if (data) {
-  //          for ( let stock of data ) {
-  //            this._socket.emit("symbolSub", { symbol: `${stock}` });
-  //         }
-  //        }
-  //       // observer.next(msg);
-  //      })
-  //    })
-  //  }
+
 
 
   subscribeToStocks(data: string[]): Observable<any[]> {
@@ -104,30 +83,6 @@ export class TradermadeService {
       });
     });
   }
-
-
-  //  subscribeToStock(data: string[]) {
-  //    if (data) {
-  //      for(let stock of data) {
-  //        this._socket.emit("symbolSub", { symbol: `${stock}`});
-  //        this._socket.on("price", (message) => {
-
-  //        })
-  //      }
-  //    }
-  //  }
-
-
-  //  subscribeToStock(data: string[]) {
-  //    if (data) {
-  //      this._socket.on('handshake', (msg) => {
-  //       for (let stock of data ) {
-  //         this._socket.emit("symbolSub", { symbol: `${stock}` });
-  //       }
-  //      });
-  //    }
-
-  //  }
 
 
 

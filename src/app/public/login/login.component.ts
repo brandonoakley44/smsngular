@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private authService: SocialAuthService, private router: Router) { }
 
   signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => this.router.navigate(['']));
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(() => this.router.navigate(['/user']));
 
   }
 

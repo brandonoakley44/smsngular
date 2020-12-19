@@ -10,6 +10,7 @@ import { UserComponent } from './user/user.component';
 import { OrderComponent } from './order/order.component';
 import { StocksComponent } from './stocks/stocks.component';
 import {ChartsModule } from 'ng2-charts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -24,7 +25,9 @@ import {ChartsModule } from 'ng2-charts';
   imports: [
     CommonModule,
     RouterModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     SecureComponent

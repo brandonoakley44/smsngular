@@ -1,18 +1,16 @@
 
-<div class="container">
+<div class="container" style="margin-left:25%; margin-top: 5%;">
   <div class="row">
     <div class="col-md-6 img">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q"  alt="" class="img-rounded">
+      <img src="{{ user.picture }}"  alt="" class="img-rounded" style="width:300px; height: 300px;">
     </div>
     <div class="col-md-6 details">
       <blockquote>
-        <h5>Fiona Gallagher</h5>
-        <small><cite title="Source Title">Chicago, United States of America  <i class="icon-map-marker"></i></cite></small>
+        <h5>{{ user.title }} {{ user.first_name }} {{ user.last_name }}</h5>
       </blockquote>
       <p>
-        fionagallager@shameless.com <br>
-        www.bootsnipp.com <br>
-        June 18, 1990
+        {{ user.email }}<br>
+
       </p>
     </div>
   </div>

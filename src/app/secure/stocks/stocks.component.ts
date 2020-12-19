@@ -18,9 +18,13 @@ export class StocksComponent implements OnInit {
   GBPUSD : Stock = { symbol: "GBPUSD", bid: "", mid: "" , ask: "" };
   EURUSD : Stock = { symbol: "EURUSD", bid: "", mid: "" , ask: "" };
 
+  usdIsSubscribed: boolean = true;
+  gbpIsSubscribed: boolean = true;
+  eurusdIsSubscribed: boolean = true;
+
   public datasets: ChartDataSets[] = [
     { data: [], label: 'Stock', fill: false , lineTension: 0 },
-    { data: [], label: 'Other', fill: false , lineTension: 0 },
+
   ];
 
   public lineChartLabels: Label[] = [];
@@ -52,6 +56,7 @@ export class StocksComponent implements OnInit {
   constructor( private traderAPIservice: TradermadeService ) { }
 
   ngOnInit(): void {
+    console.log(localStorage.getItem('loggedInUser'));
     this.subscribedStocks = ["USDJPY" , "GBPUSD", "EURUSD"];
    // this.traderAPIservice.subscribeToStock(this.subscribedStocks).sub;
     this.traderAPIservice.subscribeToStocks(this.subscribedStocks).subscribe(
