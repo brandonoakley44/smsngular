@@ -17,9 +17,9 @@ export class OrderComponent implements OnInit {
   ngOnInit(): void {
 
     this.form = this.formBuilder.group({
-      usdjpy: '',
-      gbpusd: '',
-      eurusd: ''
+      usd: '',
+      gbp: '',
+      eur: ''
     });
 
   }
@@ -28,6 +28,57 @@ export class OrderComponent implements OnInit {
   submit() {
     const data = this.form.getRawValue();
     console.log(data);
+
+    var usd = data.usd;
+    var gbp = data.gbp;
+    var eur = data.eur;
+
+    console.log("usd" + usd);
+    console.log("gbp" + gbp );
+    console.log("eur" + eur);
+
+    if (usd === true) {
+      localStorage.setItem('usd', usd);
+    }
+
+    if ( gbp === true ) {
+      localStorage.setItem('gbp', gbp);
+    }
+
+    if ( eur === true ) {
+      localStorage.setItem('eur', eur);
+    }
+
+      if ( usd === false ) {
+        localStorage.removeItem('usd');
+      }
+
+      if ( gbp === false ) {
+        localStorage.removeItem('gbp');
+      }
+
+      if ( eur === false ) {
+        localStorage.removeItem('eur');
+      }
+
+      if ( usd === "" ){
+        if ( localStorage.getItem('usd')) {
+          localStorage.removeItem('usd');
+        }
+      }
+
+      if ( gbp === "" ) {
+        if ( localStorage.getItem('gbp')){
+          localStorage.removeItem('gbp');
+        }
+      }
+
+      if ( eur === "" ) {
+        if ( localStorage.getItem('eur')){
+          localStorage.removeItem('eur');
+        }
+      }
+
 
 
     // Set the tokens and then redirect...

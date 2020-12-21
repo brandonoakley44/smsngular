@@ -4,6 +4,8 @@ import 'chartjs-plugin-streaming';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { Stock } from 'src/app/interfaces/stock';
+import * as CanvasJS from './canvasjs.min';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-stocks',
@@ -18,14 +20,29 @@ export class StocksComponent implements OnInit {
   GBPUSD : Stock = { symbol: "GBPUSD", bid: "", mid: "" , ask: "" };
   EURUSD : Stock = { symbol: "EURUSD", bid: "", mid: "" , ask: "" };
 
-  usdIsSubscribed: boolean = true;
-  gbpIsSubscribed: boolean = true;
-  eurusdIsSubscribed: boolean = true;
+  usdIsSubscribed: boolean = false;
+  gbpIsSubscribed: boolean = false;
+  eurusdIsSubscribed: boolean = false;
 
-  public datasets: ChartDataSets[] = [
-    { data: [], label: 'Stock', fill: false , lineTension: 0 },
+  public usd: ChartDataSets[] = [
+   // { data: [], label: 'Stock', fill: false , lineTension: 0 },
+    { data: [], label: 'USDJPY', fill: false , lineTension: 0 },
 
   ];
+
+  public gbp: ChartDataSets[] = [
+    // { data: [], label: 'Stock', fill: false , lineTension: 0 },
+     { data: [], label: 'GBPUSD', fill: false , lineTension: 0 },
+
+   ];
+
+   public eur: ChartDataSets[] = [
+    // { data: [], label: 'Stock', fill: false , lineTension: 0 },
+     { data: [], label: 'EURUSD', fill: false , lineTension: 0 },
+
+   ];
+
+
 
   public lineChartLabels: Label[] = [];
 
@@ -35,20 +52,24 @@ export class StocksComponent implements OnInit {
     scales: {
       xAxes: [{
       type: 'realtime',
-       realtime: {
-         onRefresh: function(chart:any) {
-           chart.data.datasets.forEach(function(dataset: any) {
-             dataset.data.push({
-               x: Date.now(),
-               y: Math.random()
-             });
-           });
-         },
-         delay: 2000
-       }
-      }]
-    }
 
+      }]
+    },
+    plugins: {
+      streaming: {            // enabled by default
+          duration: 20000,    // data in the past 20000 ms will be displayed
+          refresh: 1000,      // onRefresh callback will be called every 1000 ms
+          delay: 1000,        // delay of 1000 ms, so upcoming values are known before plotting a line
+          test: this.GBPUSD.mid,
+
+          // a callback to update datasets
+          onRefresh: function(chart) {
+              chart.data.datasets[0].data.push({
+                  x: Date.now(),
+                  y: Math.random() * 100
+              });
+          }}
+      }
   };
 
   private stockInfo;
@@ -56,9 +77,34 @@ export class StocksComponent implements OnInit {
   constructor( private traderAPIservice: TradermadeService ) { }
 
   ngOnInit(): void {
-    console.log(localStorage.getItem('loggedInUser'));
-    this.subscribedStocks = ["USDJPY" , "GBPUSD", "EURUSD"];
-   // this.traderAPIservice.subscribeToStock(this.subscribedStocks).sub;
+
+
+
+    if ( localStorage.getItem('usd')) {
+      this.subscribedStocks.push("USDJPY");
+      this.usdIsSubscribed = true;
+    } else {
+      this.usdIsSubscribed = false;
+    }
+
+    if ( localStorage.getItem('gbp')) {
+      this.subscribedStocks.push("GBPUSD");
+      this.gbpIsSubscribed = true;
+    } else {
+      this.gbpIsSubscribed = false;
+    }
+
+    if ( localStorage.getItem('eur')) {
+      this.subscribedStocks.push("EURUSD");
+      this.eurusdIsSubscribed = true;
+    } else {
+      this.eurusdIsSubscribed = false;
+    }
+
+
+
+
+
     this.traderAPIservice.subscribeToStocks(this.subscribedStocks).subscribe(
       stocks =>  this.setStocks(stocks) //console.log(stocks + "in the stocks component:) ")
     )
@@ -85,5 +131,7 @@ export class StocksComponent implements OnInit {
       console.log("EURUSD");
     }
   }
+
+
 
 }

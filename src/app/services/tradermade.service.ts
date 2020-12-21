@@ -19,7 +19,7 @@ export class TradermadeService {
     var dateArray = reggie.exec(dateString);
     var dateObject = new Date(
     (+dateArray[1]),
-    (+dateArray[2])-1, // Careful, month starts at 0!
+    (+dateArray[2])-1,
     (+dateArray[3]),
     (+dateArray[4]),
     (+dateArray[5]),
@@ -57,7 +57,7 @@ export class TradermadeService {
 
     this._socket.on('price', (message) => {
       var data = message.split(" ")
-      console.log(data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + "helloWorld")
+      console.log(data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " )
 
     });
 
