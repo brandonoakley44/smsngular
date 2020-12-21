@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class UserComponent implements OnInit {
 
-  user: User = { title: '', first_name: '', last_name: '', picture: '' }
+  user: User = { title: '', first_name: '', last_name: '', picture: '', email: '' }
 
   constructor(private userService: UserService) { }
 
